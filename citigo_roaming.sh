@@ -1,7 +1,7 @@
 #! /bin/bash
 
 legel_ssid=(ASUS_AC5300_5G ASUS_AC5300 ASUS_AC5300_5G-2 luckys_net CitiGO)
-SIGNAL_THESHOLD=50
+SIGNAL_THESHOLD=15
 declare -A password
 password=( ["ASUS_AC5300"]="@Advrobot" ["luckys_net"]="doctorso3" ["ASUS_AC5300_5G"]="@Advrobot" )
 
@@ -36,18 +36,15 @@ do
      fi
      
      # Signal check
-     #if [ "$((signal - current_SIGNAL))" -gt "$SIGNAL_THESHOLD" ]; then
-     if [ "$((current_SIGNAL))" -lt "$SIGNAL_THESHOLD" ]; then
-         echo 'restart wifi connection'
-         echo 'doctorso3' | sudo -S nmcli connection up CitiGO_auto
-         #echo "SWITCH to ${line} "
+     if [ "$((signal - current_SIGNAL))" -gt "$SIGNAL_THESHOLD" ]; then
+         echo "SWITCH to ${line} "
          # echo $line
          # Switch AP
          # nmcli d wifi connect $bssid password "${password[$ssid]}"
          # nmcli d wifi connect $bssid
-         #rfkill block wifi
-         #sleep 1
-         #rfkill unblock wifi
+         rfkill block wifi
+         sleep 1
+         rfkill unblock wifi
          break
      fi
 done 
